@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
-using VMU931_Sharp.Data;
-using VMU931_Sharp.Parser;
+using Variense.VMU931.Sharp.Data;
+using Variense.VMU931.Sharp.Parser;
 
-namespace VMU931_Sharp
+namespace Variense.VMU931.Sharp
 {
     internal class SerialConnection
     {

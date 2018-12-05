@@ -1,7 +1,7 @@
 ﻿using System;
-using VMU931_Sharp.Parser;
+using Variense.VMU931.Sharp.Parser;
 
-namespace VMU931_Sharp.Data
+namespace Variense.VMU931.Sharp.Data
 {
     public class Vec1Data
     {

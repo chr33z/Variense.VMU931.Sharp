@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace VMU931_Sharp_Test
+namespace Variense.VMU931.Sharp_Test
 {
     [TestClass]
     public class ReadValuesTest

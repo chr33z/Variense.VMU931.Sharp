@@ -1,8 +1,8 @@
 ﻿using System;
-using VMU931_Sharp.Data;
-using VMU931_Sharp.Utils;
+using Variense.VMU931.Sharp.Data;
+using Variense.VMU931.Sharp.Utils;
 
-namespace VMU931_Sharp.Parser
+namespace Variense.VMU931.Sharp.Parser
 {
     internal class DataFrameParser
     {

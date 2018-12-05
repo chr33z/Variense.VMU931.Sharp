@@ -1,7 +1,7 @@
 ﻿using System.Threading;
-using VMU931_Sharp.Data;
+using Variense.VMU931.Sharp.Data;
 
-namespace VMU931_Sharp
+namespace Variense.VMU931.Sharp
 {
     public class VMU931_Device
     {

@@ -1,15 +1,16 @@
 using System;
 using System.Threading;
-using VMU931_Sharp.Data;
+using Variense.VMU931.Sharp;
+using Variense.VMU931.Sharp.Data;
 
-namespace VMU931_Sharp_ConsoleTest
+namespace Variense.VMU931.Sharp_ConsoleTest
 {
     class Program
     {
         [STAThread]
         static void Main(string[] args)
         {
-            VMU931_Sharp.VMU931_Device _vmu931_device = new VMU931_Sharp.VMU931_Device();
+            VMU931_Device _vmu931_device = new VMU931_Device();
 
             _vmu931_device.DataFrameArrived += VMU932_DataFrameArrived;
             _vmu931_device.Connect(true);

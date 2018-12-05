@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VMU931_Sharp.Utils
+namespace Variense.VMU931.Sharp.Utils
 {
     static class ArrayUtilities
     {

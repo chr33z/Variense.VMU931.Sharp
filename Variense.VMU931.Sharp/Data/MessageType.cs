@@ -1,4 +1,4 @@
-﻿namespace VMU931_Sharp.Data
+﻿namespace Variense.VMU931.Sharp.Data
 {
     public enum MessageType
     {

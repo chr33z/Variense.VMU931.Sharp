@@ -49,9 +49,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VMU931_Sharp\VMU931_Sharp.csproj">
+    <ProjectReference Include="..\Variense.VMU931.Sharp\Variense.VMU931.Sharp.csproj">
       <Project>{7bf6104b-a180-43c2-8a51-e6b484f1d791}</Project>
-      <Name>VMU931_Sharp</Name>
+      <Name>Variense.VMU931.Sharp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

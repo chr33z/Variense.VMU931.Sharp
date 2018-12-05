@@ -1,4 +1,4 @@
-﻿namespace VMU931_Sharp.Parser
+﻿namespace Variense.VMU931.Sharp.Parser
 {
     internal static class CommandType
     {

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2041
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMU931_Sharp", "VMU931_Sharp\VMU931_Sharp.csproj", "{7BF6104B-A180-43C2-8A51-E6B484F1D791}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Variense.VMU931.Sharp", "Variense.VMU931.Sharp\Variense.VMU931.Sharp.csproj", "{7BF6104B-A180-43C2-8A51-E6B484F1D791}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMU931_Sharp_Test", "VMU931_Sharp_Test\VMU931_Sharp_Test.csproj", "{7F2047AB-F219-493C-A4AE-5CA8EA0FBA6A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Variense.VMU931.Sharp.Test", "Variense.VMU931.Sharp.Test\Variense.VMU931.Sharp.Test.csproj", "{7F2047AB-F219-493C-A4AE-5CA8EA0FBA6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMU931_Sharp_ConsoleTest", "VMU931_Sharp_ConsoleTest\VMU931_Sharp_ConsoleTest.csproj", "{E344A01F-5A9F-4DE6-B797-E510B8498E83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Variense.VMU931.Sharp.ConsoleTest", "Variense.VMU931.Sharp.ConsoleTest\Variense.VMU931.Sharp.ConsoleTest.csproj", "{E344A01F-5A9F-4DE6-B797-E510B8498E83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

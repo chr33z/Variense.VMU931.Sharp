@@ -7,8 +7,8 @@
     <ProjectGuid>{7BF6104B-A180-43C2-8A51-E6B484F1D791}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VMU931_Sharp</RootNamespace>
-    <AssemblyName>VMU931_Sharp</AssemblyName>
+    <RootNamespace>Variense.VMU931.Sharp</RootNamespace>
+    <AssemblyName>Variense.VMU931.Sharp</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
