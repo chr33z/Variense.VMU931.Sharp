@@ -8,6 +8,7 @@
         internal const char Quaternions = 'q';
         internal const char Heading = 'h';
         internal const char Magnetometers = 'c';
+        internal const char Status = 's';
 
         internal static bool IsCommandType(char c)
         {
@@ -17,7 +18,8 @@
                 c == EulerAngles ||
                 c == Quaternions ||
                 c == Heading ||
-                c == Magnetometers;
+                c == Magnetometers ||
+                c == Status;
         }
     }
 }

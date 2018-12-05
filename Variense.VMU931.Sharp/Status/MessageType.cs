@@ -4,10 +4,11 @@
     {
         None,
         Accelerometer,
-        GyroscopeCommand,
+        Gyroscope,
         EulerAngles,
         Quaternions,
         Heading,
-        Magnetometers
+        Magnetometers,
+        Status
     }
 }

@@ -41,8 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Status\AccelerometerResolution.cs" />
+    <Compile Include="Status\GyroscopeResolution.cs" />
+    <Compile Include="Status\OutputRate.cs" />
+    <Compile Include="Status\Sensors.cs" />
+    <Compile Include="Status\VMU931_Status.cs" />
     <Compile Include="Parser\ByteParser.cs" />
-    <Compile Include="Data\MessageType.cs" />
+    <Compile Include="Status\MessageType.cs" />
     <Compile Include="Data\Vec1Data.cs" />
     <Compile Include="Data\Vec4Data.cs" />
     <Compile Include="Data\Vec3Data.cs" />

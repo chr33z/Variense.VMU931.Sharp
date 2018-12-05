@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using Variense.VMU931.Sharp.Data;
 using Variense.VMU931.Sharp.Parser;
+using Variense.VMU931.Sharp.Status;
 
 namespace Variense.VMU931.Sharp
 {
     internal class SerialConnection
     {
-        internal delegate void SerialDataReceivedHandler(VMU931_Frame dataFrame);
+        internal delegate void DataFrameReceivedHandler(VMU931_Frame dataFrame);
+        internal DataFrameReceivedHandler DataFrameReceived;
 
-        internal SerialDataReceivedHandler SerialDataReceived;
+        internal delegate void StatusFrameReceivedHandler(VMU931_Status statusFrame);
+        internal StatusFrameReceivedHandler StatusFrameReceived;
 
         internal bool Connected { get; private set; }
 
@@ -25,7 +27,7 @@ namespace Variense.VMU931.Sharp
         {
             var devicePort = string.IsNullOrEmpty(port) ? FindDevicePort() : port;
 
-            if(string.IsNullOrEmpty(devicePort))
+            if (string.IsNullOrEmpty(devicePort))
             {
                 return false;
             }
@@ -43,7 +45,7 @@ namespace Variense.VMU931.Sharp
         {
             var availablePorts = SerialPort.GetPortNames().ToList();
 
-            foreach(string availablePort in availablePorts)
+            foreach (string availablePort in availablePorts)
             {
                 try
                 {
@@ -55,7 +57,7 @@ namespace Variense.VMU931.Sharp
                         var data = new byte[128];
                         port.Read(data, 0, data.Length);
 
-                        if(IsVMU931Data(data))
+                        if (IsVMU931Data(data))
                         {
                             return availablePort;
                         }
@@ -105,7 +107,7 @@ namespace Variense.VMU931.Sharp
 
         #endregion
 
-        internal void SetMessageType(MessageType messgeType)
+        internal void SendMessageType(MessageType messgeType)
         {
             switch (messgeType)
             {
@@ -120,6 +122,12 @@ namespace Variense.VMU931.Sharp
                     break;
                 case MessageType.Magnetometers:
                     _port.Write("var" + CommandType.Magnetometers);
+                    break;
+                case MessageType.Heading:
+                    _port.Write("var" + CommandType.Heading);
+                    break;
+                case MessageType.Status:
+                    _port.Write("var" + CommandType.Status);
                     break;
             }
         }
@@ -165,7 +173,14 @@ namespace Variense.VMU931.Sharp
 
                 byte messageEnd = receivedData.Dequeue();
 
-                SerialDataReceived?.Invoke(DataFrameParser.ParseDateFrame(data, messageType));
+                if (messageType == CommandType.Status)
+                {
+                    StatusFrameReceived?.Invoke(DataFrameParser.ParseStatusFrame(data));
+                }
+                else
+                {
+                    DataFrameReceived?.Invoke(DataFrameParser.ParseDateFrame(data, messageType));
+                }
             }
         }
     }

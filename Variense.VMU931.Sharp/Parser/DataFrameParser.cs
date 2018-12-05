@@ -1,16 +1,64 @@
-﻿using System;
-using Variense.VMU931.Sharp.Data;
+﻿using Variense.VMU931.Sharp.Data;
+using Variense.VMU931.Sharp.Status;
 using Variense.VMU931.Sharp.Utils;
 
 namespace Variense.VMU931.Sharp.Parser
 {
+    /// <summary>
+    /// Parsing according to:
+    /// https://variense.com/Docs/VMU931/VMU931_UserGuide.pdf
+    /// 
+    /// </summary>
     internal class DataFrameParser
     {
         internal const byte MessageStart = 0x01;
 
         internal const byte MessageEnd = 0x04;
 
-        internal static VMU931_Frame ParseDateFrame(byte[] frame, char messageType) {
+        internal static VMU931_Status ParseStatusFrame(byte[] frame)
+        {
+            VMU931_Status status = new VMU931_Status();
+
+            if (frame.Length != 7) return status;
+
+            var sensors = frame[0];
+            var resolutions = frame[1];
+            var outputRate = frame[2];
+            var messageTypes = frame[6];
+
+            if ((sensors & (1 << 0)) != 0) status.AccelerometerEnabled = true;
+            if ((sensors & (1 << 1)) != 0) status.GyroscopeEnabled = true;
+            if ((sensors & (1 << 2)) != 0) status.MagnetometerEnabled = true;
+
+            for (int i = 0; i < 8; i++)
+            {
+                if (i < 4)
+                {
+                    // accelerometer resolution
+                    if ((resolutions & (1 << i)) != 0) status.AccelerometerResolution = (AccelerometerResolution)i;
+                }
+                else
+                {
+                    // gyroresolution
+                    if ((resolutions & (1 << i)) != 0) status.AccelerometerResolution = (AccelerometerResolution)i + 4;
+                }
+            }
+
+            if ((outputRate & (1 << 0)) != 0) status.OutputRate = OutputRate.Low;
+            else status.OutputRate = OutputRate.Low;
+
+            if ((messageTypes & (1 << 0)) != 0) status.AccelerometerStreamingEnabled = true;
+            if ((messageTypes & (1 << 1)) != 0) status.GyroscopeStreamingEnabled = true;
+            if ((messageTypes & (1 << 2)) != 0) status.QuaternionStreamingEnabled = true;
+            if ((messageTypes & (1 << 3)) != 0) status.MagnetometerStreamingEnabled = true;
+            if ((messageTypes & (1 << 4)) != 0) status.EulerAngleStreamingEnabled = true;
+            if ((messageTypes & (1 << 5)) != 0) status.HeadingStreamingEnabled = true;
+
+            return status;
+        }
+
+        internal static VMU931_Frame ParseDateFrame(byte[] frame, char messageType)
+        {
 
             Vec1Data vec1data;
             Vec3Data vec3data;
