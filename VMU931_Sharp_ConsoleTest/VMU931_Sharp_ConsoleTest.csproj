@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7BF6104B-A180-43C2-8A51-E6B484F1D791}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VMU931_Sharp</RootNamespace>
-    <AssemblyName>VMU931_Sharp</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <ProjectGuid>{E344A01F-5A9F-4DE6-B797-E510B8498E83}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>VMU931_Sharp_ConsoleTest</RootNamespace>
+    <AssemblyName>VMU931_Sharp_ConsoleTest</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,18 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Parser\ByteParser.cs" />
-    <Compile Include="Data\MessageType.cs" />
-    <Compile Include="Data\Vec1Data.cs" />
-    <Compile Include="Data\Vec4Data.cs" />
-    <Compile Include="Data\Vec3Data.cs" />
-    <Compile Include="Parser\DataFrameParser.cs" />
-    <Compile Include="Parser\CommandTypes.cs" />
-    <Compile Include="SerialConnection.cs" />
-    <Compile Include="Utils\ArrayUtilities.cs" />
-    <Compile Include="VMU931_Device.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data\VMU931_Frame.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VMU931_Sharp\VMU931_Sharp.csproj">
+      <Project>{7bf6104b-a180-43c2-8a51-e6b484f1d791}</Project>
+      <Name>VMU931_Sharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
