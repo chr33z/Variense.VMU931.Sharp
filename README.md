@@ -32,5 +32,5 @@ private static void VMU931_DataFrameArrived(VMU931_Frame frame)
 ### Still to to...
 
 - [x] ~~Implement commands to change the data that is send~~
-- [ ] Implement status requests
+- [x] ~~Implement status requests~~
 - [ ] Implement Frequencies
