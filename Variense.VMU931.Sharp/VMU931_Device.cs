@@ -55,7 +55,7 @@ namespace Variense.VMU931.Sharp
         public void Disconnect()
         {
             _connectionRunning = false;
-            _serialThread.Join();
+            _serialThread?.Join();
         }
 
         private void RunSerialConnection(bool retryConnect = true, string port = "")
@@ -91,6 +91,8 @@ namespace Variense.VMU931.Sharp
                 Thread.Sleep(100);
             }
             Debug.WriteLine("[VMU931_Device] Requesting status... done.");
+
+            _serialConnection.ClearBuffers();
 
             while (_serialConnection.Connected && _connectionRunning) ;
             _serialConnection.Disconnect();

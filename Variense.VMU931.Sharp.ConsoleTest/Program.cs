@@ -16,18 +16,20 @@ namespace Variense.VMU931.Sharp_ConsoleTest
             _vmu931_device.DataFrameReceived += VMU932_DataFrameReceived;
             _vmu931_device.DeviceStatusReceived += VMU932_DeviceStatusReceived;
             _vmu931_device.Connect(true);
+            Thread.Sleep(500);
 
-            _vmu931_device.RequestStatusUpdate();
-            _vmu931_device.EnableMessageType(MessageType.Accelerometer);
-            _vmu931_device.EnableMessageType(MessageType.Magnetometers);
+
+            _vmu931_device.EnableMessageType(MessageType.EulerAngles);
             _vmu931_device.EnableMessageType(MessageType.Heading);
-            _vmu931_device.EnableMessageType(MessageType.Quaternions);
+            _vmu931_device.DisableMessageType(MessageType.Accelerometer);
+            _vmu931_device.DisableMessageType(MessageType.Magnetometers);
+            _vmu931_device.DisableMessageType(MessageType.Quaternions);
+
 
             int i = 0;
             while (i < 30)
             {
                 Thread.Sleep(250);
-                _vmu931_device.RequestStatusUpdate();
             }
 
             _vmu931_device.Disconnect();

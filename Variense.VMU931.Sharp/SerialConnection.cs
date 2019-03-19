@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
 using Variense.VMU931.Sharp.Data;
@@ -19,6 +21,8 @@ namespace Variense.VMU931.Sharp
 
         private SerialPort _port;
 
+        private string _lastPortName;
+
         private Queue<byte> receivedData = new Queue<byte>();
 
         #region Connection
@@ -29,6 +33,7 @@ namespace Variense.VMU931.Sharp
 
             if (string.IsNullOrEmpty(devicePort))
             {
+                _port = null;
                 return false;
             }
             else
@@ -36,6 +41,7 @@ namespace Variense.VMU931.Sharp
                 _port = new SerialPort(devicePort, 9600);
                 _port.DataReceived += SerialPort_DataReceived;
                 _port.Open();
+                _lastPortName = devicePort;
                 Connected = true;
                 return true;
             }
@@ -45,24 +51,31 @@ namespace Variense.VMU931.Sharp
         {
             var availablePorts = SerialPort.GetPortNames().ToList();
 
+            // if there is a already a port available that we should try then we can inject it as the first candiate in the list. 
+            // Otherwise it will search on
+            if(!string.IsNullOrEmpty(_lastPortName))
+            {
+                availablePorts.Insert(0, _lastPortName);
+            }
+
             foreach (string availablePort in availablePorts)
             {
                 try
                 {
-                    using (SerialPort port = new SerialPort(availablePort, 9600))
+                    using (SerialPort p = new SerialPort(availablePort, 9600))
                     {
-                        port.ReadTimeout = 20000;
-                        port.Open();
+                        p.ReadTimeout = 500;
+                        p.Open();
 
                         var data = new byte[128];
-                        port.Read(data, 0, data.Length);
+                        p.Read(data, 0, data.Length);
 
                         if (IsVMU931Data(data))
                         {
                             return availablePort;
                         }
 
-                        port.Close();
+                        p.Close();
 
                         return availablePort;
                     }
@@ -134,20 +147,27 @@ namespace Variense.VMU931.Sharp
 
         private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            byte[] data = new byte[_port.BytesToRead];
-            _port.Read(data, 0, data.Length);
-            data.ToList().ForEach(b => receivedData.Enqueue(b));
+            try
+            {
+                byte[] data = new byte[_port.BytesToRead];
+                _port.Read(data, 0, data.Length);
+                data.ToList().ForEach(b => receivedData.Enqueue(b));
 
-            ProcessData();
+                ProcessData();
+            }
+            catch(Exception)
+            {
+                // TODO error handling
+            }
         }
 
         private void ProcessData()
         {
-            while (receivedData.Count >= 32)
+            while (receivedData.Count >= 256)
             {
                 // skip to byte that indicates the start of a data frame
                 bool lookingForFrame = true;
-                while (lookingForFrame && receivedData.Count >= 32)
+                while (lookingForFrame && receivedData.Count >= 128)
                 {
                     var nextByte = receivedData.Dequeue();
                     var followingByte = receivedData.Peek();
@@ -163,6 +183,8 @@ namespace Variense.VMU931.Sharp
                 byte messageStart = receivedData.Dequeue();
                 byte messageSize = receivedData.Dequeue();
                 char messageType = (char)receivedData.Dequeue();
+
+                if (messageSize < 4) continue;
 
                 // message size minus four reserved bytes
                 byte[] data = new byte[messageSize - 4];
@@ -182,6 +204,12 @@ namespace Variense.VMU931.Sharp
                     DataFrameReceived?.Invoke(DataFrameParser.ParseDateFrame(data, messageType));
                 }
             }
+        }
+
+        internal void ClearBuffers()
+        {
+            _port?.DiscardInBuffer();
+            _port?.DiscardOutBuffer();
         }
     }
 }
