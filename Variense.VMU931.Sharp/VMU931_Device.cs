@@ -40,6 +40,7 @@ namespace Variense.VMU931.Sharp
         {
             if (_serialThread != null && _serialThread.IsAlive)
             {
+                Debug.WriteLine("[VMU931_Device] Serialport thread is still alive...");
                 return;
             }
             else
@@ -96,6 +97,7 @@ namespace Variense.VMU931.Sharp
 
             while (_serialConnection.Connected && _connectionRunning) ;
             _serialConnection.Disconnect();
+            Debug.WriteLine("[VMU931_Device] Serial connection closed.");
         }
 
         /// <summary>

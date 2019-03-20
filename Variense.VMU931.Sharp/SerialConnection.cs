@@ -64,7 +64,7 @@ namespace Variense.VMU931.Sharp
                 {
                     using (SerialPort p = new SerialPort(availablePort, 9600))
                     {
-                        p.ReadTimeout = 500;
+                        p.ReadTimeout = 100;
                         p.Open();
 
                         var data = new byte[128];
@@ -72,12 +72,11 @@ namespace Variense.VMU931.Sharp
 
                         if (IsVMU931Data(data))
                         {
+                            p.Close();
                             return availablePort;
                         }
 
                         p.Close();
-
-                        return availablePort;
                     }
                 }
                 catch (System.Exception)
@@ -115,7 +114,12 @@ namespace Variense.VMU931.Sharp
         internal void Disconnect()
         {
             Connected = false;
-            _port?.Close();
+
+            if(_port != null)
+            {
+                _port.DataReceived -= SerialPort_DataReceived;
+                _port.Close();
+            }
         }
 
         #endregion
